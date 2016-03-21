@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Overlay.View.ClockView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewModel="clr-namespace:Overlay.ViewModel"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance ViewModel:ClockViewModel}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Time -->
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding CurrentTime, UpdateSourceTrigger=PropertyChanged, StringFormat='HH'}" VerticalAlignment="Bottom" Foreground="#FF5ABEFF" FontFamily="Digital-7 Mono" FontSize="160"/>
+            <TextBlock Text=":" VerticalAlignment="Bottom" Foreground="#FF5ABEFF" FontFamily="Digital-7 Mono" Margin="-20,0,-20,0" FontSize="160"/>
+            <TextBlock Text="{Binding CurrentTime, UpdateSourceTrigger=PropertyChanged, StringFormat='mm'}" VerticalAlignment="Bottom" Foreground="#FF5ABEFF" FontFamily="Digital-7 Mono" FontSize="160"/>
+            <TextBlock Text="{Binding CurrentTime, UpdateSourceTrigger=PropertyChanged, StringFormat='ss'}" Margin="0,0,0,15"  VerticalAlignment="Bottom" Foreground="#FF5ABEFF" FontFamily="Digital-7 Mono" FontSize="72"/>
+        </StackPanel>
+
+        <!-- Date -->
+        <Grid Grid.Row="1" HorizontalAlignment="Right" Margin="0,-30,20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid VerticalAlignment="Bottom" Margin="0,0,5,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding CurrentTime, UpdateSourceTrigger=PropertyChanged, StringFormat='dddd'}" Foreground="#FF5ABEFF" HorizontalAlignment="Right" Margin="0,0,0,-10" FontFamily="Digital-7 Mono" FontSize="30"/>
+                <TextBlock Grid.Row="1" Text="{Binding CurrentTime, UpdateSourceTrigger=PropertyChanged, StringFormat='MMM'}" HorizontalAlignment="Right" Foreground="#FF5ABEFF" FontFamily="Digital-7 Mono" FontWeight="Bold" FontSize="50"/>
+            </Grid>
+
+            <TextBlock Grid.Column="1" Text="{Binding CurrentTime, UpdateSourceTrigger=PropertyChanged, StringFormat='dd'}" VerticalAlignment="Bottom" Foreground="#FF5ABEFF" FontFamily="Digital-7 Mono" FontSize="120"/>
+        </Grid>
+    </Grid>
+
+</UserControl>
