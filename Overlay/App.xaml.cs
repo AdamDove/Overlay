@@ -67,7 +67,12 @@ namespace Overlay
 
             if (!m_menu.IsActive)
             {
-                
+                System.Drawing.Point clickPosition = Control.MousePosition;
+                Rect desktop = System.Windows.SystemParameters.WorkArea;
+
+                m_menu.Top = clickPosition.Y - ((desktop.Height / 2.0 < clickPosition.Y) ? m_menu.Height : 0);
+                m_menu.Left = clickPosition.X - ((desktop.Width / 2.0 < clickPosition.X) ? m_menu.Width : 0);
+
                 m_menu.Show();
                 m_menu.Activate();
             }
