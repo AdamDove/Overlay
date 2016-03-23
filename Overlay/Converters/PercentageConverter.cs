@@ -11,6 +11,7 @@ namespace Overlay.Converters
     class PercentageConverter : IMultiValueConverter, IValueConverter
     {
         /// <summary>
+        /// Assumes return type is a double and all values and parameter are convertable to double
         /// 1 Parameter --> value * parameter
         /// 3 parameters --> (value0 / value1) * value2
         /// 4 parameters --> ((value0 - value1) / value2) * value3
@@ -22,17 +23,24 @@ namespace Overlay.Converters
         /// <returns></returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length == 1)
+            try
             {
-                return Convert(values[0], targetType, parameter, culture);
+                if (values.Length == 1)
+                {
+                    return Convert(values[0], targetType, parameter, culture);
+                }
+                if (values.Length == 3)
+                {
+                    return (System.Convert.ToDouble(values[0]) / System.Convert.ToDouble(values[1])) * System.Convert.ToDouble(values[2]);
+                }
+                if (values.Length == 4)
+                {
+                    return ((System.Convert.ToDouble(values[0]) - System.Convert.ToDouble(values[1])) / System.Convert.ToDouble(values[2])) * System.Convert.ToDouble(values[3]);
+                }
             }
-            if (values.Length == 3)
+            catch (Exception generalException)
             {
-                return (System.Convert.ToDouble(values[0]) / System.Convert.ToDouble(values[1])) * System.Convert.ToDouble(values[2]);
-            }
-            if (values.Length == 4)
-            {
-                return ((System.Convert.ToDouble(values[0]) - System.Convert.ToDouble(values[1])) / System.Convert.ToDouble(values[2])) * System.Convert.ToDouble(values[3]);
+                return 0.0;
             }
             throw new ArgumentException();
         }

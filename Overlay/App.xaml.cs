@@ -62,6 +62,7 @@ namespace Overlay
             {
                 m_menu = new NotifyMenuWindow();
                 m_menu.Deactivated += OnMenuDeactivated;
+                m_menu.Closed += OnMenuClosed;
                 m_menu.ShowInTaskbar = false;
             }
 
@@ -70,17 +71,53 @@ namespace Overlay
                 System.Drawing.Point clickPosition = Control.MousePosition;
                 Rect desktop = System.Windows.SystemParameters.WorkArea;
 
-                m_menu.Top = clickPosition.Y - ((desktop.Height / 2.0 < clickPosition.Y) ? m_menu.Height : 0);
-                m_menu.Left = clickPosition.X - ((desktop.Width / 2.0 < clickPosition.X) ? m_menu.Width : 0);
+                PositionWindowAtTaskbar(m_menu, Control.MousePosition);
 
                 m_menu.Show();
                 m_menu.Activate();
             }
         }
 
+        private void OnMenuClosed(object sender, EventArgs e)
+        {
+            m_menu = null;
+        }
+
+        private void PositionWindowAtTaskbar(Window window, System.Drawing.Point referencePoint)
+        {
+            Rectangle workingArea = Screen.GetWorkingArea(referencePoint);
+
+            if (referencePoint.X < workingArea.Left)
+            {
+                referencePoint.X = workingArea.Left;
+            }
+            else if (referencePoint.X > workingArea.Right)
+            {
+                referencePoint.X = workingArea.Right;
+            }
+
+            if (referencePoint.Y > workingArea.Bottom)
+            {
+                referencePoint.Y = workingArea.Bottom;
+            }
+            else if (referencePoint.Y < workingArea.Top)
+            {
+                referencePoint.Y = workingArea.Top;
+            }
+            
+            window.Top = referencePoint.Y - ((workingArea.Height / 2.0 < referencePoint.Y) ? window.Height : 0);
+            window.Left = referencePoint.X - ((workingArea.Width / 2.0 < referencePoint.X) ? window.Width : 0);
+        }
+
         private void OnMenuDeactivated(object sender, EventArgs e)
         {
             m_menu.Hide();
+        }
+
+        private void OnApplicationExit(object sender, ExitEventArgs e)
+        {
+            m_notifyIcon.Visible = false;
+            m_notifyIcon = null;
         }
     }
 }
