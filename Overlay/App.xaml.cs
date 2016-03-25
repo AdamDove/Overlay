@@ -23,7 +23,7 @@ namespace Overlay
         {
             m_windows = new List<Window>();
             m_windows.Add(new ClockWindow());
-            m_windows.Add(new DriveWindow());
+            //m_windows.Add(new DriveWindow());
 
             foreach(Window window in m_windows)
             {
@@ -71,9 +71,9 @@ namespace Overlay
                 System.Drawing.Point clickPosition = Control.MousePosition;
                 Rect desktop = System.Windows.SystemParameters.WorkArea;
 
-                PositionWindowAtTaskbar(m_menu, Control.MousePosition);
 
                 m_menu.Show();
+                PositionWindowAtTaskbar(m_menu, Control.MousePosition);
                 m_menu.Activate();
             }
         }
