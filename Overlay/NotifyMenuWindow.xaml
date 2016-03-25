@@ -4,9 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Overlay"
+        xmlns:ViewModel="clr-namespace:Overlay.ViewModel"
+        xmlns:View="clr-namespace:Overlay.View"
         mc:Ignorable="d"
-        Title="NotifyMenuWindow" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Transparent"
+        IsHitTestVisible="True"
+        Title="NotifyMenuWindow" SizeToContent="WidthAndHeight">
+    
+    <Window.DataContext>
+        <ViewModel:AppControlViewModel/>
+    </Window.DataContext>
+
+    <StackPanel>
+        <View:AppControlView/>
+    </StackPanel>
 </Window>

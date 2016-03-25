@@ -67,8 +67,12 @@
     <Compile Include="NotifyMenuWindow.xaml.cs">
       <DependentUpon>NotifyMenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AppControlViewModel.cs" />
     <Compile Include="ViewModel\ClockViewModel.cs" />
     <Compile Include="ViewModel\DriveViewModel.cs" />
+    <Compile Include="View\AppControlView.xaml.cs">
+      <DependentUpon>AppControlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ClockView.xaml.cs">
       <DependentUpon>ClockView.xaml</DependentUpon>
     </Compile>
@@ -87,6 +91,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NotifyMenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AppControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
