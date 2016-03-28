@@ -63,13 +63,13 @@
       <DependentUpon>DriveWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\AudioController.cs" />
-    <Compile Include="Model\DriveInformation.cs" />
     <Compile Include="NotifyMenuWindow.xaml.cs">
       <DependentUpon>NotifyMenuWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AppControlViewModel.cs" />
     <Compile Include="ViewModel\ClockViewModel.cs" />
     <Compile Include="ViewModel\DriveViewModel.cs" />
+    <Compile Include="ViewModel\SingleDriveViewModel.cs" />
     <Compile Include="View\AppControlView.xaml.cs">
       <DependentUpon>AppControlView.xaml</DependentUpon>
     </Compile>

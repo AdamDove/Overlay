@@ -13,6 +13,7 @@ namespace Overlay.Converters
         /// <summary>
         /// Assumes return type is a double and all values and parameter are convertable to double
         /// 1 Parameter --> value * parameter
+        /// 2 Parameters --> value0 * value1
         /// 3 parameters --> (value0 / value1) * value2
         /// 4 parameters --> ((value0 - value1) / value2) * value3
         /// </summary>
@@ -28,6 +29,10 @@ namespace Overlay.Converters
                 if (values.Length == 1)
                 {
                     return Convert(values[0], targetType, parameter, culture);
+                }
+                if (values.Length == 2)
+                {
+                    return Convert(values[0], targetType, values[1], culture);
                 }
                 if (values.Length == 3)
                 {

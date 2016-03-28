@@ -14,15 +14,15 @@ namespace Overlay.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private List<DriveInfo> m_DriveInformation = new List<DriveInfo>();
+        private List<SingleDriveViewModel> m_AllDrives = new List<SingleDriveViewModel>();
 
-        public List<DriveInfo> DriveInformation
+        public List<SingleDriveViewModel> AllDrives
         {
-            get { return m_DriveInformation; }
+            get { return m_AllDrives; }
             set
             {
-                m_DriveInformation = value;
-                RaisePropertyChangedEvent(nameof(DriveInformation));
+                m_AllDrives = value;
+                RaisePropertyChangedEvent(nameof(AllDrives));
             }
         }
 
@@ -30,20 +30,27 @@ namespace Overlay.ViewModel
 
         public DriveViewModel()
         {
-            m_UpdateTimer = new Timer(new TimerCallback(OnUpdateTimerCallback), null, TimeSpan.FromMilliseconds(500),TimeSpan.FromMilliseconds(-1));
+            m_UpdateTimer = new Timer(new TimerCallback(OnUpdateTimerCallback), null, TimeSpan.FromMilliseconds(500),TimeSpan.FromSeconds(30));
         }
 
         private void OnUpdateTimerCallback(object state)
         {
-            List<DriveInfo> itemsToAdd = new List<DriveInfo>();
-            foreach (DriveInfo drive in DriveInfo.GetDrives().Where(item => item.DriveType == DriveType.Fixed).ToList())
+            foreach (DriveInfo drive in DriveInfo.GetDrives().Where(item => item.DriveType == DriveType.Fixed))
             {
-                if (drive != null && drive.TotalSize != 0)
+                if (drive != null && !String.IsNullOrEmpty(drive.Name) && drive.TotalSize != 0)
                 {
-                    itemsToAdd.Add(drive);
+                    SingleDriveViewModel foundDrive = AllDrives.Find(d => d == drive);
+                    if (foundDrive == null)
+                    {
+                        AllDrives.Add(new SingleDriveViewModel(drive));
+                        RaisePropertyChangedEvent(nameof(AllDrives));
+                    }
+                    else
+                    {
+                        foundDrive.Update();
+                    }
                 }
             }
-            DriveInformation = itemsToAdd;
         }
 
         protected void RaisePropertyChangedEvent(string propertyName)

@@ -14,7 +14,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <ItemsControl ItemsSource="{Binding DriveInformation}" Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Stretch">
+        <ItemsControl ItemsSource="{Binding AllDrives}" Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Stretch">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1" />
@@ -24,15 +24,13 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
                             <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="DriveLetter" Grid.Column="0" HorizontalAlignment="Stretch" Text="{Binding Name}" Foreground="White" FontSize="10" />
+                        <TextBlock x:Name="DriveLetter" Grid.Column="0" HorizontalAlignment="Stretch" Text="{Binding DriveLetter}" Foreground="White" FontSize="10" Margin="5,0" />
 
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding VolumeLabel}" Foreground="White" FontSize="10" />
-
-                        <Rectangle Grid.Column="2" x:Name="BackgroundRectangle" Height="{Binding Converter={StaticResource PercentageConverter}, ElementName=DriveLetter, Path=ActualHeight, ConverterParameter=0.3}">
+                        <Rectangle Grid.Column="1" x:Name="BackgroundRectangle" Height="{Binding Converter={StaticResource PercentageConverter}, ElementName=DriveLetter, Path=ActualHeight, ConverterParameter=0.3}">
                             <Rectangle.Fill>
                                 <LinearGradientBrush>
                                     <GradientStop Color="Black" Offset="0"/>
@@ -40,16 +38,17 @@
                                 </LinearGradientBrush>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="{Binding ElementName=BackgroundRectangle, Path=ActualHeight}" Fill="#FF5ABEFF">
+                        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Fill="#FF5ABEFF"
+                                   Height="{Binding ElementName=BackgroundRectangle, Path=ActualHeight}">
                             <Rectangle.Width>
                                 <MultiBinding Converter="{StaticResource PercentageConverter}">
-                                    <Binding Path="TotalSize"/>
-                                    <Binding Path="AvailableFreeSpace"/>
-                                    <Binding Path="TotalSize"/>
+                                    <Binding Path="PercentFull"/>
                                     <Binding Path="ActualWidth" ElementName="BackgroundRectangle"/>
                                 </MultiBinding>
                             </Rectangle.Width>
                         </Rectangle>
+
+                        <TextBlock Grid.Column="2" HorizontalAlignment="Stretch" Text="{Binding SpaceRemaining}" Foreground="White" FontSize="10" Margin="5,0" />
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
