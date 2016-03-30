@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\CommandDelegate.cs" />
     <Compile Include="Converters\PercentageConverter.cs" />
     <Compile Include="DriveWindow.xaml.cs">
       <DependentUpon>DriveWindow.xaml</DependentUpon>
