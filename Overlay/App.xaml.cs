@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
 using Overlay.Properties;
+using Overlay.Model;
 
 namespace Overlay
 {

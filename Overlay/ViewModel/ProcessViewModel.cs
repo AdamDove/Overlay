@@ -1,5 +1,4 @@
-﻿using Overlay.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,27 +10,27 @@ using System.Threading.Tasks;
 
 namespace Overlay.ViewModel
 {
-    public class DriveViewModel : INotifyPropertyChanged
+    public class ProcessViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private List<SingleDriveViewModel> m_AllDrives = new List<SingleDriveViewModel>();
+        private List<SingleDriveViewModel> m_Processes = new List<SingleDriveViewModel>();
 
         public List<SingleDriveViewModel> AllDrives
         {
-            get { return m_AllDrives; }
+            get { return m_Processes; }
             set
             {
-                m_AllDrives = value;
+                m_Processes = value;
                 RaisePropertyChangedEvent(nameof(AllDrives));
             }
         }
 
         private Timer m_UpdateTimer;
 
-        public DriveViewModel()
+        public ProcessViewModel()
         {
-            m_UpdateTimer = new Timer(new TimerCallback(OnUpdateTimerCallback), null, TimeSpan.FromMilliseconds(500),TimeSpan.FromSeconds(5));
+            m_UpdateTimer = new Timer(new TimerCallback(OnUpdateTimerCallback), null, TimeSpan.FromMilliseconds(500), TimeSpan.FromSeconds(30));
         }
 
         private void OnUpdateTimerCallback(object state)

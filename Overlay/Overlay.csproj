@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,12 +65,14 @@
       <DependentUpon>DriveWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\AudioController.cs" />
+    <Compile Include="Model\PerformanceModel.cs" />
     <Compile Include="NotifyMenuWindow.xaml.cs">
       <DependentUpon>NotifyMenuWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AppControlViewModel.cs" />
     <Compile Include="ViewModel\ClockViewModel.cs" />
     <Compile Include="ViewModel\DriveViewModel.cs" />
+    <Compile Include="ViewModel\ProcessViewModel.cs" />
     <Compile Include="ViewModel\SingleDriveViewModel.cs" />
     <Compile Include="View\AppControlView.xaml.cs">
       <DependentUpon>AppControlView.xaml</DependentUpon>
@@ -82,6 +85,9 @@
     </Compile>
     <Compile Include="View\DriveView.xaml.cs">
       <DependentUpon>DriveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProcessView.xaml.cs">
+      <DependentUpon>ProcessView.xaml</DependentUpon>
     </Compile>
     <Page Include="DriveWindow.xaml">
       <SubType>Designer</SubType>
@@ -108,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DriveView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProcessView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
