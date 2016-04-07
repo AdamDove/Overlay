@@ -13,6 +13,13 @@ namespace Overlay.Model
         static private IEnumerable<ManagementObject> m_LastMeasure = null;
         static private ManagementObjectSearcher m_ProcessSearcher = new ManagementObjectSearcher("root\\CIMV2", "select * from Win32_PerfRawData_PerfProc_Process");
 
+        static public UInt64 GetTotalCpuUsage()
+        {
+            ManagementObject current = new ManagementObject("Win32_PerfFormattedData_PerfOS_Processor.Name='_Total'");
+            current.Get();
+            return (UInt64)current["PercentProcessorTime"];
+        }
+
         /// <summary>
         ///   Returns an ordered list of CPU Usage per Processor.
         ///   Will return empty list on first call.
@@ -21,11 +28,10 @@ namespace Overlay.Model
         ///   Helpful link: https://msdn.microsoft.com/en-us/library/aa394323(v=vs.85).aspx
         /// </remarks>
         /// <returns></returns>
-        static public List<Tuple<String, UInt64>> GetAllProcessCpuUsage()
+        static public List<Tuple<String, double>> GetAllProcessCpuUsage()
         {
-
             IEnumerable<ManagementObject> currentPerformance = m_ProcessSearcher.Get().Cast<ManagementObject>();
-            List<Tuple<String, UInt64>> results = new List<Tuple<string, ulong>>();
+            List<Tuple<String, double>> results = new List<Tuple<string, double>>();
 
             if (m_LastMeasure != null)
             {
@@ -34,9 +40,9 @@ namespace Overlay.Model
                     ManagementObject previous = m_LastMeasure.FirstOrDefault(mo => (UInt32)mo["IDProcess"] == (UInt32)process["IDProcess"]);
                     if (previous != null) //Only add items that exist in both lists
                     {
-                        results.Add(new Tuple<string, ulong>((string)process["Name"],
-                                                             (((UInt64)process["PercentProcessorTime"] - (UInt64)previous["PercentProcessorTime"]) * 100)
-                                                              / (((UInt64)process["Timestamp_Sys100NS"] - (UInt64)previous["Timestamp_Sys100NS"]) * (UInt64)Environment.ProcessorCount)));
+                        results.Add(new Tuple<string, double>((string)process["Name"],
+                                                             (double)(((UInt64)process["PercentProcessorTime"] - (UInt64)previous["PercentProcessorTime"]) * 100)
+                                                              / (double)(((UInt64)process["Timestamp_Sys100NS"] - (UInt64)previous["Timestamp_Sys100NS"]) * (UInt64)Environment.ProcessorCount)));
                     }
                 }
 
@@ -46,7 +52,7 @@ namespace Overlay.Model
                 if (results != null && (results.Count() > 0))
                 {
                     List<string> strings = new List<string>();
-                    foreach (Tuple<String, UInt64> tuple in results)
+                    foreach (Tuple<String, double> tuple in results)
                     {
                         strings.Add(String.Format("Name: {0} - {1}", tuple.Item1, tuple.Item2));
                     }
@@ -54,7 +60,6 @@ namespace Overlay.Model
                 }
             }
             m_LastMeasure = currentPerformance;
-
 
             return results;
         }
