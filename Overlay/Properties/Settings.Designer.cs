@@ -94,5 +94,53 @@ namespace Overlay.Properties {
                 this["DriveWindowTop"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ProcessWindowEnabled {
+            get {
+                return ((bool)(this["ProcessWindowEnabled"]));
+            }
+            set {
+                this["ProcessWindowEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ProcessWindowLeft {
+            get {
+                return ((double)(this["ProcessWindowLeft"]));
+            }
+            set {
+                this["ProcessWindowLeft"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ProcessWindowTop {
+            get {
+                return ((double)(this["ProcessWindowTop"]));
+            }
+            set {
+                this["ProcessWindowTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int ProcessNumberOfProcesses {
+            get {
+                return ((int)(this["ProcessNumberOfProcesses"]));
+            }
+            set {
+                this["ProcessNumberOfProcesses"] = value;
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <ItemsControl ItemsSource="{Binding AllDrives}" Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Stretch">
+        <ItemsControl ItemsSource="{Binding Processes}" Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Stretch">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1" />
@@ -24,13 +24,13 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="DriveLetter" Grid.Column="0" HorizontalAlignment="Stretch" Text="{Binding DriveLetter}" Foreground="White" FontSize="10" Margin="5,0" />
+                        <TextBlock x:Name="ProcessName" Grid.Column="0" HorizontalAlignment="Stretch" Text="{Binding Name}" Foreground="White" FontSize="10" Margin="5,0" />
 
-                        <Rectangle Grid.Column="1" x:Name="BackgroundRectangle" Height="{Binding Converter={StaticResource PercentageConverter}, ElementName=DriveLetter, Path=ActualHeight, ConverterParameter=0.3}">
+                        <Rectangle Grid.Column="1" x:Name="BackgroundRectangle" Height="{Binding Converter={StaticResource PercentageConverter}, ElementName=ProcessName, Path=ActualHeight, ConverterParameter=0.3}">
                             <Rectangle.Fill>
                                 <LinearGradientBrush>
                                     <GradientStop Color="Black" Offset="0"/>
@@ -42,7 +42,7 @@
                                    Height="{Binding ElementName=BackgroundRectangle, Path=ActualHeight}">
                             <Rectangle.Width>
                                 <MultiBinding Converter="{StaticResource PercentageConverter}">
-                                    <Binding Path="PercentFull"/>
+                                    <Binding Path="Percent"/>
                                     <Binding Path="ActualWidth" ElementName="BackgroundRectangle"/>
                                 </MultiBinding>
                             </Rectangle.Width>

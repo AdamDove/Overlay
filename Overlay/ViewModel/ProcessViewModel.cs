@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Overlay.Model;
+using Overlay.Properties;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,15 +16,21 @@ namespace Overlay.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private List<SingleDriveViewModel> m_Processes = new List<SingleDriveViewModel>();
+        public class SingleProcess
+        {
+            public string Name { get; set; }
+            public double Percent { get; set; }
+        }
 
-        public List<SingleDriveViewModel> AllDrives
+        private List<SingleProcess> m_Processes = new List<SingleProcess>();
+
+        public List<SingleProcess> Processes
         {
             get { return m_Processes; }
             set
             {
                 m_Processes = value;
-                RaisePropertyChangedEvent(nameof(AllDrives));
+                RaisePropertyChangedEvent(nameof(Processes));
             }
         }
 
@@ -30,26 +38,16 @@ namespace Overlay.ViewModel
 
         public ProcessViewModel()
         {
-            m_UpdateTimer = new Timer(new TimerCallback(OnUpdateTimerCallback), null, TimeSpan.FromMilliseconds(500), TimeSpan.FromSeconds(30));
+            m_UpdateTimer = new Timer(new TimerCallback(OnUpdateTimerCallback), null, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(2));
         }
 
         private void OnUpdateTimerCallback(object state)
         {
-            foreach (DriveInfo drive in DriveInfo.GetDrives().Where(item => item.DriveType == DriveType.Fixed))
+            List<Tuple<string, double>> input = PerformanceModel.GetAllProcessCpuUsage();
+            if ((input != null) && (input.Count > 0))
             {
-                if (drive != null && !String.IsNullOrEmpty(drive.Name) && drive.TotalSize != 0)
-                {
-                    SingleDriveViewModel foundDrive = AllDrives.Find(d => d == drive);
-                    if (foundDrive == null)
-                    {
-                        AllDrives.Add(new SingleDriveViewModel(drive));
-                        RaisePropertyChangedEvent(nameof(AllDrives));
-                    }
-                    else
-                    {
-                        foundDrive.Update();
-                    }
-                }
+                int numberToDraw = (Settings.Default.ProcessNumberOfProcesses > input.Count ? input.Count : Settings.Default.ProcessNumberOfProcesses);
+                Processes = input.GetRange(0, numberToDraw).Select(item => new SingleProcess() { Name = item.Item1, Percent = item.Item2 }).ToList();
             }
         }
 
